@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Virtual Oscilloscope</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+
+    <div class="header">
+        <h1>VIRTUAL OSCILLOSCOPE</h1>
+        <div class="status">
+            <div class="status-dot" id="statusDot"></div>
+            <span id="statusText">Stopped</span>
+            <span id="sampleRate"></span>
+        </div>
+    </div>
+
+    <div class="main">
+
+
+        <div class="panel">
+
+
+            <button class="btn-start" id="btnStart">▶ START</button>
+            <button class="btn-stop" id="btnStop" style="display:none">■ STOP</button>
+
+
+            <h3>⏱ Timebase</h3>
+            <label>Time/Div <span class="val" id="valTime">1.0 ms</span></label>
+            <input type="range" id="timeDiv" min="0.1" max="20" step="0.1" value="1">
+            <label>Horizontal Position <span class="val" id="valHpos">0</span></label>
+            <input type="range" id="hPos" min="-500" max="500" value="0">
+
+            <h3> Channel</h3>
+            <label>Volts/Div <span class="val" id="valVolts">50%</span></label>
+            <input type="range" id="voltsDiv" min="5" max="100" value="50">
+            <label>Vertical Offset <span class="val" id="valVoff">0</span></label>
+            <input type="range" id="vOffset" min="-150" max="150" value="0">
+            <label>Coupling</label>
+            <select id="coupling">
+                <option value="ac">AC</option>
+                <option value="dc">DC</option>
+            </select>
+
+
+            <h3> Trigger</h3>
+            <label>Mode</label>
+            <select id="trigMode">
+                <option value="auto">Auto</option>
+                <option value="normal">Normal</option>
+                <option value="single">Single</option>
+            </select>
+            <label>Edge</label>
+            <select id="trigEdge">
+                <option value="rising">Rising ↑</option>
+                <option value="falling">Falling ↓</option>
+            </select>
+            <label>Threshold <span class="val" id="valTrig">50%</span></label>
+            <input type="range" id="trigThreshold" min="0" max="100" value="50">
+
+
+            <h3> Display</h3>
+            <label>Trace Color</label>
+            <select id="traceColor">
+                <option value="#00ff00">Green</option>
+                <option value="#00ffff">Cyan</option>
+                <option value="#ffff00">Yellow</option>
+                <option value="#ff6600">Orange</option>
+                <option value="#ff00ff">Magenta</option>
+                <option value="#ffffff">White</option>
+            </select>
+            <label>Line Width <span class="val" id="valLine">2</span></label>
+            <input type="range" id="lineWidth" min="1" max="5" value="2">
+            <label>Phosphor Persistence <span class="val" id="valPersist">0%</span></label>
+            <input type="range" id="persistence" min="0" max="95" value="0">
+            <label>Grid Brightness <span class="val" id="valGrid">30%</span></label>
+            <input type="range" id="gridBright" min="0" max="100" value="30">
+
+            <!-- Tools -->
+            <h3> Tools</h3>
+            <button id="btnFreeze">⏸ Freeze</button>
+            <button id="btnScreenshot">📷 Screenshot</button>
+            <button id="btnSaveCSV">💾 Save CSV</button>
+            <button id="btnSaveWAV">🎵 Save WAV</button>
+        </div>
+
+
+        <div class="canvas-area">
+            <div class="tabs">
+                <button class="active" id="tabTime">Waveform</button>
+                <button id="tabFFT">FFT Spectrum</button>
+                <button id="tabBoth">Both</button>
+            </div>
+
+            <canvas id="scopeCanvas" height="320"></canvas>
+            <canvas id="fftCanvas" height="180" style="display:none"></canvas>
+
+            <div class="measurements">
+                <div class="meas-item">Freq: <span id="mFreq">-- Hz</span></div>
+                <div class="meas-item">Period: <span id="mPeriod">-- ms</span></div>
+                <div class="meas-item">Vpp: <span id="mVpp">--</span></div>
+                <div class="meas-item">Vrms: <span id="mVrms">--</span></div>
+                <div class="meas-item">Vmax: <span id="mVmax">--</span></div>
+                <div class="meas-item">Vmin: <span id="mVmin">--</span></div>
+                <div class="meas-item">DC Avg: <span id="mDC">--</span></div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="tooltip" id="tooltip"></div>
+
+
+    <script src="script.js"></script>
+
+
+</body>
+
+</html>
